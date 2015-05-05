@@ -14,6 +14,8 @@
 		
 		barPosition			: 'bottom',	//'bottom', 'left', 'top', 'right'
 		
+		bustCache           : false, //true to prevent client machines from caching images, false to allow clients to cache images
+		
 		cols				: 6,
 		
 		easing				: 'easeInOutExpo',	//for the complete list http://jqueryui.com/demos/effect/easing.html
@@ -1097,7 +1099,7 @@
 		if(!$('.imgLoaded',slide).length){
 			var imgUrl = allImg[slideI];
 			var imgLoaded = new Image();
-			imgLoaded.src = imgUrl +"?"+ new Date().getTime();
+			imgLoaded.src = opts.bustCache ? imgUrl + "?" + new Date().getTime() : imgUrl;
 			slide.css('visibility','hidden');
 			slide.prepend($(imgLoaded).attr('class','imgLoaded').css('visibility','hidden'));
 			var wT, hT;
@@ -1118,7 +1120,7 @@
 			if( allImg.length > (slideI+1) && !$('.imgLoaded',slideNext).length ){
 				var imgUrl2 = allImg[(slideI+1)];
 				var imgLoaded2 = new Image();
-				imgLoaded2.src = imgUrl2 +"?"+ new Date().getTime();
+				imgLoaded2.src = opts.bustCache ? imgUrl2 + "?" + new Date().getTime() : imgUrl2;
 				slideNext.prepend($(imgLoaded2).attr('class','imgLoaded').css('visibility','hidden'));
 				imgLoaded2.onload = function() {
 					wT = imgLoaded2.naturalWidth;
